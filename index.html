@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Document</title>
+    <link rel="shortcut icon" href="img/6_salsa_bottle/salsa_bottle.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <script src="classes/drawable-object.class.js"></script>
+    <script src="classes/movable-object.class.js"></script>
+    <script src="classes/status-bar.class.js"></script>
+    <script src="classes/character.class.js"></script>
+    <script src="classes/chicken.class.js"></script>
+    <script src="classes/cloud.class.js"></script>
+    <script src="classes/world.class.js"></script>
+    <script src="classes/background-object.class.js"></script>
+    <script src="classes/keyboard.class.js"></script>
+    <script src="classes/endboss.class.js"></script>
+    <script src="classes/throwable-object.js"></script>
+    <script src="classes/collectable-object.class.js"></script>
+    <script src="classes/level.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="game.js"></script>
+</head>
+
+<body onload="init()">
+    <h1>El Pollo Loco</h1>
+    <div id="start-screen">
+        <div class="ui-elements">
+            <img class="ui-element scale-on-hover" id="sound-icon" src="img/UI/sound-on.png">
+            <img class="ui-element scale-on-hover" id="fullscreen-icon" src="img/UI/fullscreen-enter.png">
+        </div>
+    </div>
+    <canvas id="canvas" width="720" height="480"></canvas>
+</body>
+
+</html>
