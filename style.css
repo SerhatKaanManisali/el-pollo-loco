@@ -17,10 +17,15 @@ h1 {
 
 canvas {
     display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+#game-box {
+    position: relative;
+    height: 480px;
+    width: 720px;
+    border: 2px solid black;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 #start-screen {
@@ -28,28 +33,36 @@ canvas {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 480px;
-    width: 780px;
-    position: fixed;
+    height: 100%;
+    width: 100%;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
 }
 
-.ui-elements {
+#ui-elements {
     cursor: pointer;
     position: absolute;
     bottom: 15px;
     right: 15px;
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 20px;
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    border-radius: 16px;
+    z-index: 1;
 }
 
-.ui-elements img {
+#ui-elements img {
     height: 30px;
     width: 30px;
+}
+
+#controls-icon {
+    width: 50px;
 }
 
 .scale-on-hover {
@@ -58,6 +71,11 @@ canvas {
 
 .scale-on-hover:hover {
     transform: scale(1.1);
+}
+
+.hide {
+    display: none;
+    animation: name duration timing-function delay iteration-count direction fill-mode;
 }
 
 @media only screen and (max-width: 720px) {

@@ -12,8 +12,8 @@ class CollectableObject extends DrawableObject{
     y = 335;
     collectBottle_sound = new Audio('audio/collect-bottle.mp3');
     collectCoin_sound = new Audio('audio/collect-coin.mp3');
-    bottleAmount = 100;
     coinAmount = 0;
+    bottleAmount = 0;
     type;
     world;
 

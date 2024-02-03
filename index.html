@@ -28,13 +28,16 @@
 
 <body onload="init()">
     <h1>El Pollo Loco</h1>
-    <div id="start-screen">
-        <div class="ui-elements">
-            <img class="ui-element scale-on-hover" id="sound-icon" src="img/UI/sound-on.png">
-            <img class="ui-element scale-on-hover" id="fullscreen-icon" src="img/UI/fullscreen-enter.png">
+    <div id="game-box">
+        <div id="start-screen"></div>
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="ui-elements">
+            <img class="scale-on-hover" id="play-icon" src="img/ui/play-icon.png" onclick="startGame()" title="play">
+            <img class="scale-on-hover" id="controls-icon" src="img/ui/controls.png" onclick="toggleControls()" title="controls">
+            <img class="scale-on-hover" id="sound-icon" src="img/ui/sound-on.png" onclick="toggleSound()" title="sound">
+            <img class="scale-on-hover" id="fullscreen-icon" src="img/ui/fullscreen-enter.png" onclick="toggleFullscreen()" title="fullscreen">
         </div>
     </div>
-    <canvas id="canvas" width="720" height="480"></canvas>
 </body>
 
 </html>

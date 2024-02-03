@@ -5,14 +5,14 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    healthBar = new StatusBar('HEALTH', 100, 0);
-    bottleBar = new StatusBar('BOTTLE', 0, 50);
-    coinBar = new StatusBar('COIN', 0, 100);
+    healthBar = new StatusBar('HEALTH', 100, 20);
+    bottleBar = new StatusBar('BOTTLE', 0, 70);
+    coinBar = new StatusBar('COIN', 0, 120);
     throwableObject = new ThrowableObject();
     collectableObject = new CollectableObject();
     chicken = new Chicken();
     endboss = new Endboss();
-    endbossBar = new StatusBar('ENDBOSS', 100, 150);
+    endbossBar = new StatusBar('ENDBOSS', 100, 170);
 
 
     constructor(canvas, keyboard) {
