@@ -20,7 +20,7 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
     type;
-    chickenHurt_sound = new Audio ('audio/chicken-hurt.mp3');
+    chickenHurt_sound = new Audio('audio/chicken-hurt.mp3');
 
 
     constructor(type) {
@@ -59,11 +59,11 @@ class Chicken extends MovableObject {
 
 
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.moveLeft();
         }, 1000 / 60);
 
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.type === 'normal') {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD_NORMAL);
@@ -89,12 +89,16 @@ class Chicken extends MovableObject {
     }
 
 
-    spawnChicken() {
-        setInterval(() => {
+    spawnNormalChicken() {
+        setStoppableInterval(() => {
             let chicken = new Chicken('normal');
             this.world.level.enemies.push(chicken);
         }, 5000);
-        setInterval(() => {
+    }
+
+
+    spawnSmallChicken() {
+        setStoppableInterval(() => {
             let chicken = new Chicken('small');
             this.world.level.enemies.push(chicken);
         }, 7500);

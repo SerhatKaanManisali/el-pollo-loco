@@ -40,7 +40,7 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speed_y = 12;
         this.applyGravity();
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.speed_y !== 0) {
                 this.moveRight();
             }
@@ -69,19 +69,21 @@ class ThrowableObject extends MovableObject {
 
 
     checkThrownObjects() {
-        if (this.world.keyboard.SHIFT && this.world.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
-            this.throwDelay = true;
-            this.collisionStatus = false;
-            let bottle = new ThrowableObject(this.world.character.x + 50, this.world.character.y + 100);
-            this.world.level.throwableObjects.push(bottle);
-            this.world.collectableObject.reduceBottleAmount();
-            this.world.bottleBar.percentage = this.world.collectableObject.bottleAmount;
-            this.world.bottleBar.setPercentage();
-            this.checkIfBottleHit(bottle);
-            setTimeout(() => {
-                this.throwDelay = false;
-            }, 1000);
-        }
+        setStoppableInterval(() => {
+            if (this.world.keyboard.SHIFT && this.world.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
+                this.throwDelay = true;
+                this.collisionStatus = false;
+                let bottle = new ThrowableObject(this.world.character.x + 50, this.world.character.y + 100);
+                this.world.level.throwableObjects.push(bottle);
+                this.world.collectableObject.reduceBottleAmount();
+                this.world.bottleBar.percentage = this.world.collectableObject.bottleAmount;
+                this.world.bottleBar.setPercentage();
+                this.checkIfBottleHit(bottle);
+                setTimeout(() => {
+                    this.throwDelay = false;
+                }, 1000);
+            }
+        }, 100);
     }
 
 

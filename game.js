@@ -3,11 +3,25 @@ let world;
 let keyboard = new Keyboard();
 let gameRunning = false;
 let fullscreen = false;
+let sound = true;
+let allIntervals = [];
 
 
 
 function init() {
     canvas = document.getElementById('canvas');
+}
+
+
+
+function toggleGame() {
+    if (gameRunning === false) {
+        startGame();
+        changeSrc('play-icon', 'img/ui/pause-icon.png');
+    } else {
+        stopGame();
+        changeSrc('play-icon', 'img/ui/play-icon.png');
+    }
 }
 
 
@@ -21,6 +35,20 @@ function startGame() {
 
 
 
+function stopGame() {
+    allIntervals.forEach(clearInterval);
+    gameRunning = false;
+}
+
+
+
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    allIntervals.push(id);
+}
+
+
+
 function toggleClass(id, className) {
     let element = document.getElementById(id);
     element.classList.toggle(className);
@@ -30,10 +58,16 @@ function toggleClass(id, className) {
 
 function toggleSound() {
     let soundIcon = document.getElementById('sound-icon');
-    if (soundIcon.src === `${getProtocol()}//${getHost()}/img/ui/sound-on.png`) {
+    if (sound === true) {
         changeSrc('sound-icon', 'img/ui/sound-off.png');
     } else {
         changeSrc('sound-icon', 'img/ui/sound-on.png');
+    }
+    
+    if (soundIcon.src === `${getProtocol()}//${getHost()}/img/ui/sound-on.png`) {
+        
+    } else {
+        
     }
 }
 
@@ -60,7 +94,6 @@ function openFullscreen() {
     }
     fullscreen = true;
     changeSrc('fullscreen-icon', 'img/ui/fullscreen-exit.png');
-    adjustCanvas();
 }
 
 
@@ -75,13 +108,6 @@ function closeFullscreen() {
     }
     fullscreen = false;
     changeSrc('fullscreen-icon', 'img/ui/fullscreen-enter.png');
-}
-
-
-
-function adjustCanvas() {
-    canvas.style.width = '100%'
-    canvas.style.height = '100%'
 }
 
 

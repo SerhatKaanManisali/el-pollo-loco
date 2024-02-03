@@ -1,4 +1,4 @@
-class CollectableObject extends DrawableObject{
+class CollectableObject extends DrawableObject {
     IMAGES_BOTTLE_ON_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
@@ -55,18 +55,20 @@ class CollectableObject extends DrawableObject{
 
 
     checkCollectables() {
-        this.world.level.collectableObjects.forEach((co) => {
-            if (this.world.character.isColliding(co) && co.type === 'bottle' && this.bottleAmount < 100) {
-                this.collectBottle(co);
-            } else if (this.world.character.isColliding(co) && co.type === 'coin' && this.coinAmount < 100) {
-                this.collectCoin(co);
-            }
-        })
+        setStoppableInterval(() => {
+            this.world.level.collectableObjects.forEach((co) => {
+                if (this.world.character.isColliding(co) && co.type === 'bottle' && this.bottleAmount < 100) {
+                    this.collectBottle(co);
+                } else if (this.world.character.isColliding(co) && co.type === 'coin' && this.coinAmount < 100) {
+                    this.collectCoin(co);
+                }
+            });
+        }, 100);
     }
 
 
     spawnBottle() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.bottleAmount < 100) {
                 this.type = 'bottle'
                 if (this.world.level.collectableObjects.currentBottle === 'left') {
@@ -79,7 +81,7 @@ class CollectableObject extends DrawableObject{
                     this.world.level.collectableObjects.currentBottle = 'left';
                 }
             }
-        }, 4000);
+        }, 4000)
     }
 
 
@@ -94,7 +96,7 @@ class CollectableObject extends DrawableObject{
 
 
     spanwCoin() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.coinAmount < 100) {
                 this.type = 'coin'
                 if (this.world.level.collectableObjects.currentCoin === 'small') {

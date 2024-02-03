@@ -9,6 +9,7 @@ function initLevel() {
             new Chicken('small'),
         ],
         [
+            new Cloud(),
             new Cloud()
         ],
         [
