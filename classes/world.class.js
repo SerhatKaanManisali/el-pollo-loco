@@ -48,21 +48,23 @@ class World {
 
     checkCollissions() {
         setStoppableInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && enemy.healthPoints > 0) {
-                    if (this.character.isAboveGround() && this.character.speed_y <= 0 && enemy.type) {
-                        enemy.healthPoints = 0;
-                        this.chicken.chickenHurt_sound.play();
-                        this.character.jump();
-                        this.character.jump_sound.play();
-                    } else {
-                        this.character.hit(5);
-                        this.character.hurt_sound.play();
-                        this.healthBar.percentage = this.character.healthPoints;
-                        this.healthBar.setPercentage();
+            if (gameRunning) {
+                this.level.enemies.forEach((enemy) => {
+                    if (this.character.isColliding(enemy) && enemy.healthPoints > 0) {
+                        if (this.character.isAboveGround() && this.character.speed_y <= 0 && enemy.type) {
+                            enemy.healthPoints = 0;
+                            this.chicken.chickenHurt_sound.play();
+                            this.character.jump();
+                            this.character.jump_sound.play();
+                        } else {
+                            this.character.hit(5);
+                            this.character.hurt_sound.play();
+                            this.healthBar.percentage = this.character.healthPoints;
+                            this.healthBar.setPercentage();
+                        }
                     }
-                }
-            });
+                });
+            }
         }, 100);
     }
 
@@ -133,7 +135,7 @@ class World {
 
     activateEndboss() {
         setStoppableInterval(() => {
-            if (this.character.x >= 3000) {
+            if (gameRunning && this.character.x >= 3000) {
                 this.level.enemies.push(this.endboss);
             }
         }, 100);

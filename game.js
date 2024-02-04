@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameRunning = false;
+let startscreen = true;
 let fullscreen = false;
 let sound = true;
 let allIntervals = [];
@@ -15,12 +16,24 @@ function init() {
 
 
 function toggleGame() {
-    if (gameRunning === false) {
+    if (!gameRunning && startscreen) {
         startGame();
         changeSrc('play-icon', 'img/ui/pause-icon.png');
+        changeTitle('play-icon', 'Pause');
+    } else if (gameRunning && world.character.healthPoints !== 0 || gameRunning && world.endboss.healthPoints !== 0) {
+        gameRunning = false;
+        changeSrc('play-icon', 'img/ui/play-icon.png');
+        changeTitle('play-icon', 'Play');
+        toggleClass('pause-screen', 'hide');
+    } else if (!gameRunning && world.character.healthPoints !== 0 || !gameRunning && world.endboss.healthPoints !== 0) { 
+        gameRunning = true;
+        changeSrc('play-icon', 'img/ui/pause-icon.png');
+        changeTitle('play-icon', 'Pause');
+        toggleClass('pause-screen', 'hide');
     } else {
         stopGame();
         changeSrc('play-icon', 'img/ui/play-icon.png');
+        changeTitle('play-icon', 'Play');
     }
 }
 
@@ -31,6 +44,7 @@ function startGame() {
     world = new World(canvas, keyboard);
     toggleClass('start-screen', 'hide');
     gameRunning = true;
+    startscreen = false;
 }
 
 
@@ -57,17 +71,12 @@ function toggleClass(id, className) {
 
 
 function toggleSound() {
-    let soundIcon = document.getElementById('sound-icon');
     if (sound === true) {
         changeSrc('sound-icon', 'img/ui/sound-off.png');
+        changeTitle('sound-icon', 'Sound off');
     } else {
         changeSrc('sound-icon', 'img/ui/sound-on.png');
-    }
-    
-    if (soundIcon.src === `${getProtocol()}//${getHost()}/img/ui/sound-on.png`) {
-        
-    } else {
-        
+        changeTitle('sound-icon', 'Sound on');
     }
 }
 
@@ -76,8 +85,12 @@ function toggleSound() {
 function toggleFullscreen() {
     if (fullscreen === false) {
         openFullscreen();
+        changeSrc('fullscreen-icon', 'img/ui/fullscreen-exit.png');
+        changeTitle('fullscreen-icon', 'Exit fullscreen');
     } else {
         closeFullscreen();
+        changeSrc('fullscreen-icon', 'img/ui/fullscreen-enter.png');
+        changeTitle('fullscreen-icon', 'Enter fullscreen');
     }
 }
 
@@ -93,7 +106,6 @@ function openFullscreen() {
         gameBox.msRequestFullscreen();
     }
     fullscreen = true;
-    changeSrc('fullscreen-icon', 'img/ui/fullscreen-exit.png');
 }
 
 
@@ -107,7 +119,6 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
     fullscreen = false;
-    changeSrc('fullscreen-icon', 'img/ui/fullscreen-enter.png');
 }
 
 
@@ -115,6 +126,13 @@ function closeFullscreen() {
 function changeSrc(id, path) {
     let img = document.getElementById(id);
     img.src = path;
+}
+
+
+
+function changeTitle(id, name) {
+    let element = document.getElementById(id);
+    element.title = name;
 }
 
 

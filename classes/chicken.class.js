@@ -60,30 +60,34 @@ class Chicken extends MovableObject {
 
     animate() {
         setStoppableInterval(() => {
-            this.moveLeft();
+            if (gameRunning) {
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
         setStoppableInterval(() => {
-            if (this.type === 'normal') {
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD_NORMAL);
-                    this.speed = 0;
-                    setTimeout(() => {
-                        this.height = 0;
-                        this.width = 0;
-                    }, 5000)
-                } else
-                    this.playAnimation(this.IMAGES_WALKING_NORMAL);
-            } else if (this.type === 'small') {
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD_SMALL);
-                    this.speed = 0;
-                    setTimeout(() => {
-                        this.height = 0;
-                        this.width = 0;
-                    }, 5000)
-                } else
-                    this.playAnimation(this.IMAGES_WALKING_SMALL);
+            if (gameRunning) {
+                if (this.type === 'normal') {
+                    if (this.isDead()) {
+                        this.playAnimation(this.IMAGES_DEAD_NORMAL);
+                        this.speed = 0;
+                        setTimeout(() => {
+                            this.height = 0;
+                            this.width = 0;
+                        }, 5000)
+                    } else
+                        this.playAnimation(this.IMAGES_WALKING_NORMAL);
+                } else if (this.type === 'small') {
+                    if (this.isDead()) {
+                        this.playAnimation(this.IMAGES_DEAD_SMALL);
+                        this.speed = 0;
+                        setTimeout(() => {
+                            this.height = 0;
+                            this.width = 0;
+                        }, 5000)
+                    } else
+                        this.playAnimation(this.IMAGES_WALKING_SMALL);
+                }
             }
         }, 200);
     }
@@ -91,16 +95,20 @@ class Chicken extends MovableObject {
 
     spawnNormalChicken() {
         setStoppableInterval(() => {
-            let chicken = new Chicken('normal');
-            this.world.level.enemies.push(chicken);
+            if (gameRunning) {
+                let chicken = new Chicken('normal');
+                this.world.level.enemies.push(chicken);
+            }
         }, 5000);
     }
 
 
     spawnSmallChicken() {
         setStoppableInterval(() => {
-            let chicken = new Chicken('small');
-            this.world.level.enemies.push(chicken);
+            if (gameRunning) {
+                let chicken = new Chicken('small');
+                this.world.level.enemies.push(chicken);
+            }
         }, 7500);
     }
 }

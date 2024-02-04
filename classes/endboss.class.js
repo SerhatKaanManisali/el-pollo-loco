@@ -54,23 +54,27 @@ class Endboss extends MovableObject {
 
     animate() {
         setStoppableInterval(() => {
-            this.moveLeft();
+            if (gameRunning) {
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
         setStoppableInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.enddbossDead_sound.play();
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                this.endbossHit_sound.play();
-            } else if (this.x - (this.world.character.x + this.world.character.width) <= this.attackRange) {
-                this.attack();
-            } else if (this.x - (this.world.character.x + this.world.character.width) <= this.chaseRange) {
-                this.chase();
-            } else {
-                this.speed = 0.5;
-                this.playAnimation(this.IMAGES_WALKING);
+            if (gameRunning) {
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    this.enddbossDead_sound.play();
+                } else if (this.isHurt()) {
+                    this.playAnimation(this.IMAGES_HURT);
+                    this.endbossHit_sound.play();
+                } else if (this.x - (this.world.character.x + this.world.character.width) <= this.attackRange) {
+                    this.attack();
+                } else if (this.x - (this.world.character.x + this.world.character.width) <= this.chaseRange) {
+                    this.chase();
+                } else {
+                    this.speed = 0.5;
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
             }
         }, 200);
     }

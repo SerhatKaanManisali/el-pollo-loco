@@ -41,7 +41,7 @@ class ThrowableObject extends MovableObject {
         this.speed_y = 12;
         this.applyGravity();
         setStoppableInterval(() => {
-            if (this.speed_y !== 0) {
+            if (gameRunning && this.speed_y !== 0) {
                 this.moveRight();
             }
         }, 1000 / 60);
@@ -51,7 +51,7 @@ class ThrowableObject extends MovableObject {
 
 
     animateBottle() {
-        if (!this.isAboveGround() && this.splashSound === true) {
+        if (gameRunning && !this.isAboveGround() && this.splashSound === true) {
             this.playAnimation(this.IMAGES_BOTTLE_SPLASHING);
             this.throwBottle_sound.pause();
             this.splashBottle_sound.play();
@@ -70,7 +70,7 @@ class ThrowableObject extends MovableObject {
 
     checkThrownObjects() {
         setStoppableInterval(() => {
-            if (this.world.keyboard.SHIFT && this.world.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
+            if (gameRunning && this.world.keyboard.SHIFT && this.world.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
                 this.throwDelay = true;
                 this.collisionStatus = false;
                 let bottle = new ThrowableObject(this.world.character.x + 50, this.world.character.y + 100);

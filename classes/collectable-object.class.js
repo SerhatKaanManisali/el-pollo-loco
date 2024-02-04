@@ -56,20 +56,22 @@ class CollectableObject extends DrawableObject {
 
     checkCollectables() {
         setStoppableInterval(() => {
-            this.world.level.collectableObjects.forEach((co) => {
-                if (this.world.character.isColliding(co) && co.type === 'bottle' && this.bottleAmount < 100) {
-                    this.collectBottle(co);
-                } else if (this.world.character.isColliding(co) && co.type === 'coin' && this.coinAmount < 100) {
-                    this.collectCoin(co);
-                }
-            });
+            if (gameRunning) {
+                this.world.level.collectableObjects.forEach((co) => {
+                    if (this.world.character.isColliding(co) && co.type === 'bottle' && this.bottleAmount < 100) {
+                        this.collectBottle(co);
+                    } else if (this.world.character.isColliding(co) && co.type === 'coin' && this.coinAmount < 100) {
+                        this.collectCoin(co);
+                    }
+                });
+            }
         }, 100);
     }
 
 
     spawnBottle() {
         setStoppableInterval(() => {
-            if (this.bottleAmount < 100) {
+            if (gameRunning && this.bottleAmount < 100) {
                 this.type = 'bottle'
                 if (this.world.level.collectableObjects.currentBottle === 'left') {
                     let bottle = new CollectableObject('right', 'bottle');
@@ -97,7 +99,7 @@ class CollectableObject extends DrawableObject {
 
     spanwCoin() {
         setStoppableInterval(() => {
-            if (this.coinAmount < 100) {
+            if (gameRunning && this.coinAmount < 100) {
                 this.type = 'coin'
                 if (this.world.level.collectableObjects.currentCoin === 'small') {
                     let coin = new CollectableObject('big', 'coin');
