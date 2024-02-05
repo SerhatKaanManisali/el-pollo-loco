@@ -10,8 +10,6 @@ class CollectableObject extends DrawableObject {
     height = 100;
     width = 80;
     y = 335;
-    collectBottle_sound = new Audio('audio/collect-bottle.mp3');
-    collectCoin_sound = new Audio('audio/collect-coin.mp3');
     coinAmount = 0;
     bottleAmount = 0;
     type;
@@ -50,7 +48,7 @@ class CollectableObject extends DrawableObject {
             this.width = 150;
             this.height = 150;
         }
-        this.collectCoin_sound.volume = 0.25;
+        allSounds[6].volume = 0.25;
     }
 
 
@@ -91,7 +89,7 @@ class CollectableObject extends DrawableObject {
         let index = this.world.level.collectableObjects.indexOf(co);
         this.world.level.collectableObjects.splice(index, 1);
         this.bottleAmount += 10;
-        this.collectBottle_sound.play();
+        allSounds[5].play();
         this.world.bottleBar.percentage = this.bottleAmount;
         this.world.bottleBar.setPercentage();
     }
@@ -119,7 +117,7 @@ class CollectableObject extends DrawableObject {
         let index = this.world.level.collectableObjects.indexOf(co);
         this.world.level.collectableObjects.splice(index, 1);
         this.coinAmount += 10;
-        this.collectCoin_sound.play();
+        allSounds[6].play();
         this.world.coinBar.percentage = this.coinAmount;
         this.world.coinBar.setPercentage();
     }

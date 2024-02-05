@@ -63,10 +63,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ]
     world;
-    walking_sound = new Audio('audio/walking.mp3');
-    jump_sound = new Audio('audio/jump.mp3');
-    hurt_sound = new Audio('audio/hurt.mp3');
-    idleLong_sound = new Audio('audio/snoring.mp3');
     idleStart = 0;
 
 
@@ -82,8 +78,8 @@ class Character extends MovableObject {
         this.applyGravity();
         this.move();
         this.animate();
-        this.hurt_sound.volume = 0.35;
-        this.idleLong_sound.volume = 0.15;
+        allSounds[2].volume = 0.35;
+        allSounds[3].volume = 0.15;
     }
 
 
@@ -94,7 +90,7 @@ class Character extends MovableObject {
                     this.moveRight();
                     this.otherDirection = false;
                     if (!this.isAboveGround()) {
-                        this.walking_sound.play();
+                        allSounds[0].play();
                     }
                 }
         
@@ -102,14 +98,14 @@ class Character extends MovableObject {
                     this.moveLeft();
                     this.otherDirection = true
                     if (!this.isAboveGround()) {
-                        this.walking_sound.play();
+                        allSounds[0].play();
                     }
                 }
         
                 if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                     this.jump();
-                    this.jump_sound.volume = 0.5;
-                    this.jump_sound.play();
+                    allSounds[1].volume = 0.5;
+                    allSounds[1].play();
                 }
         
                 this.world.camera_x = -this.x + 100;
@@ -123,31 +119,31 @@ class Character extends MovableObject {
             if (gameRunning) {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD);
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                     stopGame();
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
                     this.idleStart = 0;
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                 } else if (this.isAboveGround() && this.speed_y > 0) {
                     this.playAnimation(this.IMAGES_JUMPING);
                     this.idleStart = 0;
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                 } else if (this.isAboveGround() && this.speed_y < 0) {
                     this.playAnimation(this.IMAGES_FALLING);
                     this.idleStart = 0;
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                 } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.idleStart = 0;
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                 } else if (this.idleStart >= 5000) {
                     this.playAnimation(this.IMAGES_IDLE_LONG);
-                    this.idleLong_sound.play();
+                    allSounds[3].play();
                 } else {
                     this.playAnimation(this.IMAGES_IDLE);
                     this.idleStart += 100;
-                    this.idleLong_sound.pause();
+                    allSounds[3].pause();
                 }
             }
         }, 100);

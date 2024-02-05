@@ -6,6 +6,20 @@ let startscreen = true;
 let fullscreen = false;
 let sound = true;
 let allIntervals = [];
+let allSounds = [
+    new Audio('audio/walking.mp3'),
+    new Audio('audio/jump.mp3'),
+    new Audio('audio/hurt.mp3'),
+    new Audio('audio/snoring.mp3'),
+    new Audio('audio/chicken-hurt.mp3'),
+    new Audio('audio/collect-bottle.mp3'),
+    new Audio('audio/collect-coin.mp3'),
+    new Audio('audio/endboss-hit.mp3'),
+    new Audio('audio/endboss-attack.mp3'),
+    new Audio('audio/endboss-dead.mp3'),
+    new Audio('audio/throw-bottle.mp3'),
+    new Audio('audio/break-bottle.mp3')
+];
 
 
 
@@ -25,7 +39,7 @@ function toggleGame() {
         changeSrc('play-icon', 'img/ui/play-icon.png');
         changeTitle('play-icon', 'Play');
         toggleClass('pause-screen', 'hide');
-    } else if (!gameRunning && world.character.healthPoints >= 0 || !gameRunning && world.endboss.healthPoints >= 0) { 
+    } else if (!gameRunning && world.character.healthPoints >= 0 || !gameRunning && world.endboss.healthPoints >= 0) {
         gameRunning = true;
         changeSrc('play-icon', 'img/ui/pause-icon.png');
         changeTitle('play-icon', 'Pause');
@@ -89,10 +103,29 @@ function toggleSound() {
         changeSrc('sound-icon', 'img/ui/sound-off.png');
         changeTitle('sound-icon', 'Sound off');
         sound = false;
+        muteSound();
     } else {
         changeSrc('sound-icon', 'img/ui/sound-on.png');
         changeTitle('sound-icon', 'Sound on');
+        sound = true
+        unmuteSound();
     }
+}
+
+
+
+function muteSound() {
+    allSounds.forEach((sound) => {
+        sound.muted = true;
+    })
+}
+
+
+
+function unmuteSound() {
+    allSounds.forEach((sound) => {
+        sound.muted = false;
+    })
 }
 
 

@@ -29,9 +29,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
     world;
-    endbossHit_sound = new Audio('audio/endboss-hit.mp3');
-    endbossAttack_sound = new Audio('audio/endboss-attack.mp3');
-    enddbossDead_sound = new Audio('audio/endboss-dead.mp3');
     distance;
     attackRange = 30;
     chaseRange = 250;
@@ -46,8 +43,8 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 4000;
         this.speed = 0.5;
-        this.endbossAttack_sound.volume = 0.15;
-        this.enddbossDead_sound.volume = 0.15;
+        allSounds[8].volume = 0.15;
+        allSounds[9].volume = 0.15;
         this.animate();
     }
 
@@ -63,11 +60,11 @@ class Endboss extends MovableObject {
             if (gameRunning) {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD);
-                    this.enddbossDead_sound.play();
+                    allSounds[9].play();
                     stopGame();
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
-                    this.endbossHit_sound.play();
+                    allSounds[7].play();
                 } else if (this.x - (this.world.character.x + this.world.character.width) <= this.attackRange) {
                     this.attack();
                 } else if (this.x - (this.world.character.x + this.world.character.width) <= this.chaseRange) {
@@ -84,9 +81,9 @@ class Endboss extends MovableObject {
     attack() {
         this.speed = 0;
         this.playAnimation(this.IMAGES_ATTACK);
-        this.endbossAttack_sound.play();
+        allSounds[8].play();
         this.world.character.hit(1);
-        this.world.character.hurt_sound.play();
+        allSounds[2].play();
         this.world.healthBar.percentage = this.world.character.healthPoints;
         this.world.healthBar.setPercentage();
     }

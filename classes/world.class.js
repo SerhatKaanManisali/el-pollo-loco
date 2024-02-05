@@ -8,11 +8,12 @@ class World {
     healthBar = new StatusBar('HEALTH', 100, 0);
     bottleBar = new StatusBar('BOTTLE', 0, 50);
     coinBar = new StatusBar('COIN', 0, 100);
-    throwableObject = new ThrowableObject();
     collectableObject = new CollectableObject();
     chicken = new Chicken();
     endboss = new Endboss();
     endbossBar = new StatusBar('ENDBOSS', 100, 150);
+    throwDelay = false;
+    collisionStatus = false;
 
 
     constructor(canvas, keyboard) {
@@ -28,7 +29,6 @@ class World {
     setWorld() {
         this.character.world = this;
         this.collectableObject.world = this;
-        this.throwableObject.world = this;
         this.chicken.world = this;
         this.endboss.world = this;
     }
@@ -36,7 +36,7 @@ class World {
 
     run() {
         this.checkCollissions();
-        this.throwableObject.checkThrownObjects();
+        this.checkThrownObjects();
         this.collectableObject.checkCollectables();
         this.activateEndboss();
         this.collectableObject.spawnBottle();
@@ -53,17 +53,36 @@ class World {
                     if (this.character.isColliding(enemy) && enemy.healthPoints > 0) {
                         if (this.character.isAboveGround() && this.character.speed_y <= 0 && enemy.type) {
                             enemy.healthPoints = 0;
-                            this.chicken.chickenHurt_sound.play();
+                            allSounds[4].play();
                             this.character.jump();
-                            this.character.jump_sound.play();
+                            allSounds[1].play();
                         } else {
                             this.character.hit(5);
-                            this.character.hurt_sound.play();
+                            allSounds[2].play();
                             this.healthBar.percentage = this.character.healthPoints;
                             this.healthBar.setPercentage();
                         }
                     }
                 });
+            }
+        }, 100);
+    }
+
+
+    checkThrownObjects() {
+        setStoppableInterval(() => {
+            if (gameRunning && this.keyboard.SHIFT && this.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
+                this.throwDelay = true;
+                this.collisionStatus = false;
+                let bottle = new ThrowableObject(this.world.character.x + 50, this.world.character.y + 100);
+                this.level.throwableObjects.push(bottle);
+                this.collectableObject.reduceBottleAmount();
+                this.bottleBar.percentage = this.world.collectableObject.bottleAmount;
+                this.bottleBar.setPercentage();
+                this.checkIfBottleHit(bottle);
+                setTimeout(() => {
+                    this.throwDelay = false;
+                }, 1000);
             }
         }, 100);
     }

@@ -20,7 +20,6 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
     type;
-    chickenHurt_sound = new Audio('audio/chicken-hurt.mp3');
 
 
     constructor(type) {
@@ -28,7 +27,7 @@ class Chicken extends MovableObject {
         this.x = 700 + Math.random() * 3300;
         this.type = type;
         this.speed = 0.5 + Math.random() * 2;
-        this.chickenHurt_sound.volume = 0.35;
+        allSounds[4].volume = 0.35;
         this.loadImages(this.IMAGES_WALKING_NORMAL);
         this.loadImages(this.IMAGES_DEAD_NORMAL);
         this.loadImages(this.IMAGES_WALKING_SMALL);
