@@ -64,6 +64,7 @@ class Endboss extends MovableObject {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD);
                     this.enddbossDead_sound.play();
+                    stopGame();
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
                     this.endbossHit_sound.play();
@@ -84,7 +85,7 @@ class Endboss extends MovableObject {
         this.speed = 0;
         this.playAnimation(this.IMAGES_ATTACK);
         this.endbossAttack_sound.play();
-        this.world.character.hit(5);
+        this.world.character.hit(1);
         this.world.character.hurt_sound.play();
         this.world.healthBar.percentage = this.world.character.healthPoints;
         this.world.healthBar.setPercentage();

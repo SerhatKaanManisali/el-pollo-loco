@@ -20,20 +20,18 @@ function toggleGame() {
         startGame();
         changeSrc('play-icon', 'img/ui/pause-icon.png');
         changeTitle('play-icon', 'Pause');
-    } else if (gameRunning && world.character.healthPoints !== 0 || gameRunning && world.endboss.healthPoints !== 0) {
+    } else if (gameRunning && world.character.healthPoints >= 0 || gameRunning && world.endboss.healthPoints >= 0) {
         gameRunning = false;
         changeSrc('play-icon', 'img/ui/play-icon.png');
         changeTitle('play-icon', 'Play');
         toggleClass('pause-screen', 'hide');
-    } else if (!gameRunning && world.character.healthPoints !== 0 || !gameRunning && world.endboss.healthPoints !== 0) { 
+    } else if (!gameRunning && world.character.healthPoints >= 0 || !gameRunning && world.endboss.healthPoints >= 0) { 
         gameRunning = true;
         changeSrc('play-icon', 'img/ui/pause-icon.png');
         changeTitle('play-icon', 'Pause');
         toggleClass('pause-screen', 'hide');
     } else {
         stopGame();
-        changeSrc('play-icon', 'img/ui/play-icon.png');
-        changeTitle('play-icon', 'Play');
     }
 }
 
@@ -42,16 +40,32 @@ function toggleGame() {
 function startGame() {
     initLevel();
     world = new World(canvas, keyboard);
-    toggleClass('start-screen', 'hide');
     gameRunning = true;
     startscreen = false;
+    let startSrc = document.getElementById('start-screen');
+    let endScr = document.getElementById('end-screen');
+    if (!startSrc.classList.contains('hide')) {
+        toggleClass('start-screen', 'hide');
+    }
+    if (!endScr.classList.contains('hide')) {
+        toggleClass('end-screen', 'hide');
+    }
 }
 
 
 
 function stopGame() {
-    allIntervals.forEach(clearInterval);
+    if (world.character.healthPoints === 0 || world.endboss.healthPoints === 0) {
+        changeSrc('play-icon', 'img/ui/replay-icon.png');
+        changeTitle('play-icon', 'Play again');
+    } else {
+        changeSrc('play-icon', 'img/ui/play-icon.png');
+        changeTitle('play-icon', 'Play');
+    }
+    toggleClass('end-screen', 'hide');
     gameRunning = false;
+    startscreen = true;
+    allIntervals.forEach(clearInterval);
 }
 
 
@@ -74,6 +88,7 @@ function toggleSound() {
     if (sound === true) {
         changeSrc('sound-icon', 'img/ui/sound-off.png');
         changeTitle('sound-icon', 'Sound off');
+        sound = false;
     } else {
         changeSrc('sound-icon', 'img/ui/sound-on.png');
         changeTitle('sound-icon', 'Sound on');

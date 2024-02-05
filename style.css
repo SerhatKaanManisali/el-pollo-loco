@@ -1,9 +1,11 @@
 body {
+    height: 80vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-image: url('img/5_background/start_screen_background.jpg');
+    background-image: url('img/5_background/start_screen_background.png');
     background-repeat: no-repeat;
     font-family: 'Bangers', 'Patua One', Helvetica, sans-serif;
     margin: 0;
@@ -12,7 +14,10 @@ body {
 h1 {
     font-size: 64px;
     letter-spacing: 5px;
-    text-shadow: 6px 6px 4px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(-5px 5px 1px rgb(149, 56, 22));
 }
 
 canvas {
@@ -58,6 +63,19 @@ canvas {
     align-items: center;
 }
 
+#end-screen {
+    background-image: url('img/9_intro_outro_screens/game_over/game over.png');
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
 #ui-elements {
     cursor: pointer;
     position: absolute;
@@ -68,7 +86,7 @@ canvas {
     gap: 20px;
     background-color: rgba(0, 0, 0, 0.25);
     padding: 10px;
-    border-radius: 16px;
+    border-radius: 10px;
     z-index: 1;
     border: 2px solid black;
     box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25);
