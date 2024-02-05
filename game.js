@@ -32,18 +32,10 @@ function init() {
 function toggleGame() {
     if (!gameRunning && startscreen) {
         startGame();
-        changeSrc('play-icon', 'img/ui/pause-icon.png');
-        changeTitle('play-icon', 'Pause');
     } else if (gameRunning && world.character.healthPoints >= 0 || gameRunning && world.endboss.healthPoints >= 0) {
-        gameRunning = false;
-        changeSrc('play-icon', 'img/ui/play-icon.png');
-        changeTitle('play-icon', 'Play');
-        toggleClass('pause-screen', 'hide');
+        pauseGame();
     } else if (!gameRunning && world.character.healthPoints >= 0 || !gameRunning && world.endboss.healthPoints >= 0) {
-        gameRunning = true;
-        changeSrc('play-icon', 'img/ui/pause-icon.png');
-        changeTitle('play-icon', 'Pause');
-        toggleClass('pause-screen', 'hide');
+        resumeGame();
     } else {
         stopGame();
     }
@@ -56,6 +48,44 @@ function startGame() {
     world = new World(canvas, keyboard);
     gameRunning = true;
     startscreen = false;
+    displayGameScreen();
+    changeTitle('play-icon', 'P = Pause');
+    changeSrc('play-icon', 'img/ui/pause-icon.png');
+}
+
+
+
+function pauseGame() {
+    gameRunning = false;
+    changeSrc('play-icon', 'img/ui/play-icon.png');
+    changeTitle('play-icon', 'P = Play');
+    toggleClass('pause-screen', 'hide');
+    muteSound();
+}
+
+
+
+function resumeGame() {
+    gameRunning = true;
+    changeSrc('play-icon', 'img/ui/pause-icon.png');
+    changeTitle('play-icon', 'P = Pause');
+    toggleClass('pause-screen', 'hide');
+    unmuteSound();
+}
+
+
+
+function stopGame() {
+    displayReplayIcon();
+    toggleClass('end-screen', 'hide');
+    gameRunning = false;
+    startscreen = true;
+    allIntervals.forEach(clearInterval);
+}
+
+
+
+function displayGameScreen() {
     let startSrc = document.getElementById('start-screen');
     let endScr = document.getElementById('end-screen');
     if (!startSrc.classList.contains('hide')) {
@@ -68,18 +98,14 @@ function startGame() {
 
 
 
-function stopGame() {
+function displayReplayIcon() {
     if (world.character.healthPoints === 0 || world.endboss.healthPoints === 0) {
         changeSrc('play-icon', 'img/ui/replay-icon.png');
-        changeTitle('play-icon', 'Play again');
+        changeTitle('play-icon', 'P = Play again');
     } else {
         changeSrc('play-icon', 'img/ui/play-icon.png');
-        changeTitle('play-icon', 'Play');
+        changeTitle('play-icon', 'P = Play');
     }
-    toggleClass('end-screen', 'hide');
-    gameRunning = false;
-    startscreen = true;
-    allIntervals.forEach(clearInterval);
 }
 
 
@@ -100,14 +126,9 @@ function toggleClass(id, className) {
 
 function toggleSound() {
     if (sound === true) {
-        changeSrc('sound-icon', 'img/ui/sound-off.png');
-        changeTitle('sound-icon', 'Sound off');
-        sound = false;
         muteSound();
     } else {
-        changeSrc('sound-icon', 'img/ui/sound-on.png');
-        changeTitle('sound-icon', 'Sound on');
-        sound = true
+
         unmuteSound();
     }
 }
@@ -117,7 +138,10 @@ function toggleSound() {
 function muteSound() {
     allSounds.forEach((sound) => {
         sound.muted = true;
-    })
+    });
+    changeSrc('sound-icon', 'img/ui/sound-off.png');
+    changeTitle('sound-icon', 'M = Unmute');
+    sound = false;
 }
 
 
@@ -125,7 +149,10 @@ function muteSound() {
 function unmuteSound() {
     allSounds.forEach((sound) => {
         sound.muted = false;
-    })
+    });
+    changeSrc('sound-icon', 'img/ui/sound-on.png');
+    changeTitle('sound-icon', 'M = Mute');
+    sound = true
 }
 
 
@@ -134,11 +161,11 @@ function toggleFullscreen() {
     if (fullscreen === false) {
         openFullscreen();
         changeSrc('fullscreen-icon', 'img/ui/fullscreen-exit.png');
-        changeTitle('fullscreen-icon', 'Exit fullscreen');
+        changeTitle('fullscreen-icon', 'F = Fullscreen');
     } else {
         closeFullscreen();
         changeSrc('fullscreen-icon', 'img/ui/fullscreen-enter.png');
-        changeTitle('fullscreen-icon', 'Enter fullscreen');
+        changeTitle('fullscreen-icon', 'F = Fullscreen');
     }
 }
 
@@ -167,6 +194,12 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
     fullscreen = false;
+}
+
+
+
+function toggleControls() {
+    toggleClass('controls-pop-up', 'hide');
 }
 
 
