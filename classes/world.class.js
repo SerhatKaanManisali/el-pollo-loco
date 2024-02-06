@@ -74,10 +74,10 @@ class World {
             if (gameRunning && this.keyboard.SHIFT && this.collectableObject.bottleAmount > 0 && this.throwDelay === false) {
                 this.throwDelay = true;
                 this.collisionStatus = false;
-                let bottle = new ThrowableObject(this.world.character.x + 50, this.world.character.y + 100);
+                let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
                 this.level.throwableObjects.push(bottle);
                 this.collectableObject.reduceBottleAmount();
-                this.bottleBar.percentage = this.world.collectableObject.bottleAmount;
+                this.bottleBar.percentage = this.collectableObject.bottleAmount;
                 this.bottleBar.setPercentage();
                 this.checkIfBottleHit(bottle);
                 setTimeout(() => {
@@ -85,6 +85,24 @@ class World {
                 }, 1000);
             }
         }, 100);
+    }
+
+
+    checkIfBottleHit(bottle) {
+        this.level.enemies.forEach((enemy) => {
+            if (bottle.isColliding(enemy) && !this.collisionStatus) {
+                if (enemy.type) {
+                    allSounds[4].play();
+                    enemy.hit(100);
+                } else {
+                    this.endboss.hit(20);
+                    this.endbossBar.percentage = this.endboss.healthPoints;
+                    this.endbossBar.setPercentage();
+                    this.collisionStatus = true;
+                }
+            }
+        });
+        requestAnimationFrame(() => this.checkIfBottleHit(bottle));
     }
 
 

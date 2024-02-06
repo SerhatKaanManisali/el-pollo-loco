@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
     healthPoints = 100;
     lastHit = 0;
     offset_y = -10;
-    offset_x = 10;
+    offset_x = -10;
 
 
     applyGravity() {

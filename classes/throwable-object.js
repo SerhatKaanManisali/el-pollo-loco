@@ -40,12 +40,12 @@ class ThrowableObject extends MovableObject {
                 this.moveRight();
             }
         }, 1000 / 60);
-        this.bottleAnimation = setInterval(() => this.animateBottle(), 100);
+        this.bottleAnimation = setStoppableInterval(() => this.animateBottle(), 100);
     }
 
 
     animateBottle() {
-        if (gameRunning && !this.isAboveGround() && this.splashSound === true) {
+        if (gameRunning && !this.isAboveGround()) {
             this.playAnimation(this.IMAGES_BOTTLE_SPLASHING);
             allSounds[10].pause();
             allSounds[11].play();
@@ -59,23 +59,5 @@ class ThrowableObject extends MovableObject {
             this.playAnimation(this.IMAGES_BOTTLE_ROTATING);
             allSounds[10].play();
         }
-    }
-
-
-    checkIfBottleHit(bottle) {
-        this.world.level.enemies.forEach((enemy) => {
-            if (bottle.isColliding(enemy) && !this.collisionStatus) {
-                if (enemy.type) {
-                    allSounds[4].play();
-                    enemy.hit(100);
-                } else {
-                    this.world.endboss.hit(20);
-                    this.world.endbossBar.percentage = this.world.endboss.healthPoints;
-                    this.world.endbossBar.setPercentage();
-                    this.collisionStatus = true;
-                }
-            }
-        });
-        requestAnimationFrame(() => this.checkIfBottleHit(bottle));
     }
 }

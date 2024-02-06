@@ -138,6 +138,7 @@ function toggleSound() {
 function muteSound() {
     allSounds.forEach((sound) => {
         sound.muted = true;
+        sound.pause();
     });
     changeSrc('sound-icon', 'img/ui/sound-off.png');
     changeTitle('sound-icon', 'M = Unmute');

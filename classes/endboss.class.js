@@ -61,7 +61,7 @@ class Endboss extends MovableObject {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD);
                     allSounds[9].play();
-                    stopGame();
+                    setTimeout(stopGame(), 100);
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
                     allSounds[7].play();

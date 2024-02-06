@@ -82,8 +82,8 @@ canvas {
     right: 15px;
     width: 50%;
     height: 80%;
-    background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
-    z-index: 1;
+    background: linear-gradient(to top, rgba(255, 159, 0, 0.5) 0%, rgba(255, 223, 0, 0.5) 75%);
+    z-index: 2;
     border-radius: 10px;
     border: 2px solid black;
 }
@@ -126,11 +126,9 @@ canvas {
     width: 64px !important;
 }
 
-#ui-elements {
+.ui-box {
     cursor: pointer;
     position: absolute;
-    bottom: 15px;
-    right: 15px;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -140,16 +138,29 @@ canvas {
     z-index: 2;
     border: 2px solid black;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+    height: 30px;
 }
 
-#ui-elements img {
+.ui-box img {
     height: 30px;
     width: 30px;
 }
 
-#controls-icon {
-    width: 50px;
+#in-game-ui {
+    bottom: 15px;
+    right: 15px;
 }
+
+#legal-matters {
+    bottom: 15px;
+    left: 15px;
+}
+
+#controls-icon {
+    width: 40px !important;
+}
+
+#ui-element-
 
 .scale-on-hover {
     transition: transform 100ms ease-in-out;
