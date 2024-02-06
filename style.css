@@ -1,5 +1,5 @@
 body {
-    height: 80vh;
+    height: 101vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -9,6 +9,7 @@ body {
     background-repeat: no-repeat;
     font-family: 'Bangers', 'Patua One', Helvetica, sans-serif;
     margin: 0;
+    overflow: hidden;
 }
 
 h1 {
@@ -26,6 +27,23 @@ canvas {
     height: 100%;
 }
 
+#rotate-smartphone {
+    object-fit: cover;
+    z-index: 3;
+    position: fixed;
+    background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
+    height: 101vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rotate-smartphone img {
+    height: 50%;
+    width: 50%;
+}
+
 #game-box {
     position: relative;
     height: 480px;
@@ -33,6 +51,7 @@ canvas {
     border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 13%;
 }
 
 #start-screen {
@@ -160,9 +179,7 @@ canvas {
     width: 40px !important;
 }
 
-#ui-element-
-
-.scale-on-hover {
+#ui-element- .scale-on-hover {
     transition: transform 100ms ease-in-out;
 }
 
@@ -175,17 +192,64 @@ canvas {
 }
 
 @media only screen and (max-width: 720px) {
-    canvas {
+    #game-box {
         width: 100%;
+        margin-bottom: unset;
+    }
+
+    .ui-box {
+        gap: 10px;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        height: 20px;
+    }
+
+    #in-game-ui {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    #legal-matters {
+        bottom: 10px;
+        left: 10px;
+    }
+}
+
+@media only screen and (max-height: 640px) {
+    #headline {
+        display: none;
+    }
+
+    #game-box {
+        margin-bottom: unset;
     }
 }
 
 @media only screen and (max-height: 480px) {
-    canvas {
+    body {
+        height: unset;
+    }
+
+    #game-box {
         height: 100vh;
     }
 
-    h1 {
+    #headline {
         display: none;
+    }
+
+    .ui-box {
+        gap: 10px;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        height: 20px;
+    }
+
+    #in-game-ui {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    #legal-matters {
+        bottom: 10px;
+        left: 10px;
     }
 }

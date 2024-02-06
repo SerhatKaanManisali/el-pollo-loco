@@ -25,6 +25,15 @@ let allSounds = [
 
 function init() {
     canvas = document.getElementById('canvas');
+    checkScreenOrientation();
+}
+
+
+
+function checkScreenOrientation() {
+    if (window.innerWidth <= 720 && screen.orientation.type === 'portrait-primary') {
+        toggleClass('rotate-smartphone', 'hide');
+    }
 }
 
 
@@ -128,7 +137,6 @@ function toggleSound() {
     if (sound === true) {
         muteSound();
     } else {
-
         unmuteSound();
     }
 }
@@ -237,6 +245,16 @@ function getHost() {
     let host = window.location.host;
     return host;
 }
+
+
+
+screen.orientation.addEventListener('change', () => {
+    if (screen.orientation.type === 'landscape-primary') {
+        toggleClass('rotate-smartphone', 'hide');
+    } else {
+        toggleClass('rotate-smartphone', 'hide');
+    }
+});
 
 
 

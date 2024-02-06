@@ -40,7 +40,8 @@ class ThrowableObject extends MovableObject {
                 this.moveRight();
             }
         }, 1000 / 60);
-        this.bottleAnimation = setStoppableInterval(() => this.animateBottle(), 100);
+        this.bottleAnimation = setInterval(() => this.animateBottle(), 100);
+        allIntervals.push(this.bottleAnimation);
     }
 
 
