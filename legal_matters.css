@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    font-family: 'Patua One', 'Bangers', Helvetica, sans-serif;
+    background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.imprint-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+}
+
+h1 {
+    font-size: 44px;
+}
+
+h2 {
+    font-size: 38px;
+}
+
+p {
+    font-size: 20px;
+}
+
+.privacy-policy-box {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+h3 {
+    font-size: 32px;
+}
+
+h4 {
+    font-size: 26px;
+}

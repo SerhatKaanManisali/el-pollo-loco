@@ -18,14 +18,15 @@ let allSounds = [
     new Audio('audio/endboss-attack.mp3'),
     new Audio('audio/endboss-dead.mp3'),
     new Audio('audio/throw-bottle.mp3'),
-    new Audio('audio/break-bottle.mp3')
+    new Audio('audio/break-bottle.mp3'),
+    new Audio('audio/background-music.mp3')
 ];
-
 
 
 function init() {
     canvas = document.getElementById('canvas');
     checkScreenOrientation();
+    keyboard.bindButtonPressEvents();
 }
 
 
@@ -60,6 +61,7 @@ function startGame() {
     displayGameScreen();
     changeTitle('play-icon', 'P = Pause');
     changeSrc('play-icon', 'img/ui/pause-icon.png');
+    setUpBackgroundMusic();
 }
 
 
@@ -119,6 +121,14 @@ function displayReplayIcon() {
 
 
 
+function setUpBackgroundMusic() {
+    allSounds[12].volume = 0.025;
+    allSounds[12].play();
+    allSounds[12].loop = true;
+}
+
+
+
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     allIntervals.push(id);
@@ -158,6 +168,7 @@ function muteSound() {
 function unmuteSound() {
     allSounds.forEach((sound) => {
         sound.muted = false;
+        allSounds[12].play();
     });
     changeSrc('sound-icon', 'img/ui/sound-on.png');
     changeTitle('sound-icon', 'M = Mute');

@@ -9,7 +9,6 @@ class Keyboard {
 
     constructor() {
         this.bindKeyPressEvents();
-        this.bindButtonPressEvents();
     }
 
 
@@ -86,44 +85,31 @@ class Keyboard {
             event.preventDefault();
             this.LEFT = true;
         });
-
-
         document.getElementById('move-left-button').addEventListener('touchend', (event) => {
             event.preventDefault();
             this.LEFT = false;
         });
-
-
+    
         document.getElementById('move-right-button').addEventListener('touchstart', (event) => {
             event.preventDefault();
             this.RIGHT = true;
         });
-
-
         document.getElementById('move-right-button').addEventListener('touchend', (event) => {
             event.preventDefault();
             this.RIGHT = false;
         });
-
-
         document.getElementById('jump-button').addEventListener('touchstart', (event) => {
             event.preventDefault();
             this.SPACE = true;
         });
-
-
         document.getElementById('jump-button').addEventListener('touchend', (event) => {
             event.preventDefault();
             this.SPACE = false;
         });
-
-
         document.getElementById('throw-button').addEventListener('touchstart', (event) => {
             event.preventDefault();
             this.SHIFT = true;
         });
-
-
         document.getElementById('throw-button').addEventListener('touchend', (event) => {
             event.preventDefault();
             this.SHIFT = false;
