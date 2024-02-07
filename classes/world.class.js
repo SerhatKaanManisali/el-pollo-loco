@@ -57,7 +57,7 @@ class World {
                             this.character.jump();
                             allSounds[1].play();
                         } else {
-                            this.character.hit(5);
+                            this.character.hit(1);
                             allSounds[2].play();
                             this.healthBar.percentage = this.character.healthPoints;
                             this.healthBar.setPercentage();
@@ -65,7 +65,7 @@ class World {
                     }
                 });
             }
-        }, 100);
+        }, 1000 / 60);
     }
 
 

@@ -226,7 +226,6 @@ function changeTitle(id, name) {
 }
 
 
-
 /**
  * Identifies the protocol method of the current site.
  * @returns The protocol method as a string.
@@ -253,72 +252,5 @@ screen.orientation.addEventListener('change', () => {
         toggleClass('rotate-smartphone', 'hide');
     } else {
         toggleClass('rotate-smartphone', 'hide');
-    }
-});
-
-
-
-window.addEventListener('keydown', (event) => {
-    if (event.keyCode == 37 || event.keyCode == 65) {
-        keyboard.LEFT = true;
-    }
-
-    if (event.keyCode == 38 || event.keyCode == 87) {
-        keyboard.UP = true;
-    }
-
-    if (event.keyCode == 39 || event.keyCode == 68) {
-        keyboard.RIGHT = true;
-    }
-
-    if (event.keyCode == 40 || event.keyCode == 83) {
-        keyboard.DOWN = true;
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-
-    if (event.keyCode == 16) {
-        keyboard.SHIFT = true;
-    }
-});
-
-
-window.addEventListener('keyup', (event) => {
-    if (event.keyCode == 37 || event.keyCode == 65) {
-        keyboard.LEFT = false;
-    }
-
-    if (event.keyCode == 38 || event.keyCode == 87) {
-        keyboard.UP = false;
-    }
-
-    if (event.keyCode == 39 || event.keyCode == 68) {
-        keyboard.RIGHT = false;
-    }
-
-    if (event.keyCode == 40 || event.keyCode == 83) {
-        keyboard.DOWN = false;
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (event.keyCode == 16) {
-        keyboard.SHIFT = false;
-    }
-
-    if (event.keyCode == 70) {
-        toggleFullscreen();
-    }
-
-    if (event.keyCode == 77) {
-        toggleSound();
-    }
-
-    if (event.keyCode == 67) {
-        toggleControls();
     }
 });

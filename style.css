@@ -158,21 +158,13 @@ canvas {
     border: 2px solid black;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
     height: 30px;
+    top: 15px;
+    right: 15px
 }
 
 .ui-box img {
     height: 30px;
     width: 30px;
-}
-
-#in-game-ui {
-    bottom: 15px;
-    right: 15px;
-}
-
-#legal-matters {
-    bottom: 15px;
-    left: 15px;
 }
 
 #controls-icon {
@@ -201,16 +193,43 @@ canvas {
         gap: 10px;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         height: 20px;
-    }
-
-    #in-game-ui {
-        bottom: 10px;
+        top: 10px;
         right: 10px;
     }
-    
-    #legal-matters {
-        bottom: 10px;
-        left: 10px;
+
+    .mobile-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        z-index: 2;
+        align-items: center;
+        height: 54px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .button-box {
+        margin-left: 20px;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .button-box img {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
+        border-radius: 100%;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .button-box button {
+        border: unset;
+        padding: 10px;
+        border-radius: 100%;
+        background-color: transparent;
     }
 }
 
@@ -241,15 +260,42 @@ canvas {
         gap: 10px;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         height: 20px;
-    }
-
-    #in-game-ui {
-        bottom: 10px;
+        top: 10px;
         right: 10px;
     }
-    
-    #legal-matters {
-        bottom: 10px;
-        left: 10px;
+
+    .mobile-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        z-index: 2;
+        align-items: center;
+        height: 54px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .button-box {
+        margin-left: 20px;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .button-box img {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(to top, #FF9F00 0%, #FFDF00 75%);
+        border-radius: 100%;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .button-box button {
+        border: unset;
+        padding: 10px;
+        border-radius: 100%;
+        background-color: transparent;
     }
 }
