@@ -15,7 +15,9 @@ let allSounds = [
 ];
 
 
-
+/**
+ * @returns - HTML Template for control instructions on mobile devices.
+ */
 function mobileControlsTemplate() {
     return /*html*/`
         <div class="controls-content">
@@ -48,7 +50,9 @@ function mobileControlsTemplate() {
 }
 
 
-
+/**
+ * @returns - HTML Template for control instructions on PC.
+ */
 function desktopControlsTemplate() {
     return /*html*/`
         <div class="controls-content">

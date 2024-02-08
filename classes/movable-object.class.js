@@ -5,8 +5,10 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     healthPoints = 100;
     lastHit = 0;
-    offset_y = -10;
-    offset_x = -10;
+    offset_top = 200;
+    offset_bottom = -10;
+    offset_right = -50;
+    offset_left = 50
 
 
     /**
@@ -71,9 +73,10 @@ class MovableObject extends DrawableObject {
      * @returns - Condition when checking if two objects are colliding.
      */
     isColliding(mo) {
-        return (this.x + this.width + this.offset_x) >= mo.x && (this.x + this.offset_x) <= (mo.x + mo.width) && 
-        (this.y + this.offset_y + this.height) >= mo.y &&
-        (this.y + this.offset_y) <= (mo.y + mo.height);
+        return (this.x + this.width + this.offset_right) >= mo.x &&
+        (this.x + this.offset_left) <= (mo.x + mo.width) &&
+        (this.y + this.offset_bottom + this.height) >= mo.y &&
+        (this.y + this.offset_top) <= (mo.y + mo.height);
     }
 
 
