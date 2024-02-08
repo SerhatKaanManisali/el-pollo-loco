@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
     healthPoints = 100;
     lastHit = 0;
     offset_top = 200;
-    offset_bottom = -10;
+    offset_bottom = -20;
     offset_right = -50;
     offset_left = 50
 

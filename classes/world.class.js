@@ -15,7 +15,6 @@ class World {
     throwDelay = false;
     collisionStatus = false;
     endbossActive;
-    movableObject = new MovableObject();
 
 
     constructor(canvas, keyboard) {

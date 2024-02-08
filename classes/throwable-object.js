@@ -37,6 +37,9 @@ class ThrowableObject extends MovableObject {
         this.height = 100;
         this.width = 80;
         this.speed = 8;
+        this.offset_top = 30;
+        this.offset_left = 20;
+        this.offset_right = -20;
         allSounds[10].volume = 0.35;
         allSounds[11].volume = 0.35;
     }
