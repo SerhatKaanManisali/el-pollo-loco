@@ -6,23 +6,11 @@ let startscreen = true;
 let fullscreen = false;
 let sound = true;
 let allIntervals = [];
-let allSounds = [
-    new Audio('audio/walking.mp3'),
-    new Audio('audio/jump.mp3'),
-    new Audio('audio/hurt.mp3'),
-    new Audio('audio/snoring.mp3'),
-    new Audio('audio/chicken-hurt.mp3'),
-    new Audio('audio/collect-bottle.mp3'),
-    new Audio('audio/collect-coin.mp3'),
-    new Audio('audio/endboss-hit.mp3'),
-    new Audio('audio/endboss-attack.mp3'),
-    new Audio('audio/endboss-dead.mp3'),
-    new Audio('audio/throw-bottle.mp3'),
-    new Audio('audio/break-bottle.mp3'),
-    new Audio('audio/background-music.mp3')
-];
 
 
+/**
+ * Initializes certain function when HTML body has loaded.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     checkScreenOrientation();
@@ -30,7 +18,9 @@ function init() {
 }
 
 
-
+/**
+ * Once HTML body has loaded, checks if mobile device is being held in portrait or landscape mode.
+ */
 function checkScreenOrientation() {
     if (window.innerWidth <= 720 && screen.orientation.type === 'portrait-primary') {
         toggleClass('rotate-smartphone', 'hide');
@@ -38,7 +28,9 @@ function checkScreenOrientation() {
 }
 
 
-
+/**
+ * Either starts, pauses, resumes or fully stops game depending on game state. 
+ */
 function toggleGame() {
     if (!gameRunning && startscreen) {
         startGame();
@@ -52,20 +44,25 @@ function toggleGame() {
 }
 
 
-
+/**
+ * Sets up world and starts game.
+ */
 function startGame() {
     initLevel();
     world = new World(canvas, keyboard);
     gameRunning = true;
     startscreen = false;
     displayGameScreen();
+    displayMobileButtons();
     changeTitle('play-icon', 'P = Pause');
     changeSrc('play-icon', 'img/ui/pause-icon.png');
     setUpBackgroundMusic();
 }
 
 
-
+/**
+ * Pauses game.
+ */
 function pauseGame() {
     gameRunning = false;
     changeSrc('play-icon', 'img/ui/play-icon.png');
@@ -75,7 +72,9 @@ function pauseGame() {
 }
 
 
-
+/**
+ * Resumes game.
+ */
 function resumeGame() {
     gameRunning = true;
     changeSrc('play-icon', 'img/ui/pause-icon.png');
@@ -85,7 +84,9 @@ function resumeGame() {
 }
 
 
-
+/**
+ * Fully stops game by clearing all intervals.
+ */
 function stopGame() {
     displayReplayIcon();
     toggleClass('end-screen', 'hide');
@@ -95,7 +96,9 @@ function stopGame() {
 }
 
 
-
+/**
+ * Either displays start or endscreen depending on game state.
+ */
 function displayGameScreen() {
     let startSrc = document.getElementById('start-screen');
     let endScr = document.getElementById('end-screen');
@@ -108,7 +111,9 @@ function displayGameScreen() {
 }
 
 
-
+/**
+ * Replaces play button with replay button once game has fully stopped.
+ */
 function displayReplayIcon() {
     if (world.character.healthPoints === 0 || world.endboss.healthPoints === 0) {
         changeSrc('play-icon', 'img/ui/replay-icon.png');
@@ -120,7 +125,20 @@ function displayReplayIcon() {
 }
 
 
+/**
+ * Displays controls for mobile devices once game has started.
+ */
+function displayMobileButtons() {
+    let mobileButtons = document.getElementById('mobile-buttons');
+    if (mobileButtons.classList.contains('hide')) {
+        toggleClass('mobile-buttons', 'hide');
+    }
+}
 
+
+/**
+ * Starts and adjusts background music when game is running.
+ */
 function setUpBackgroundMusic() {
     allSounds[12].volume = 0.025;
     allSounds[12].play();
@@ -128,21 +146,31 @@ function setUpBackgroundMusic() {
 }
 
 
-
+/**
+ * Pushes functions in array so they can be stopped easier later on.
+ * @param {function} fn - Interval's function.
+ * @param {number} frequency - Interval's frequency in milliseconds.
+ */
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     allIntervals.push(id);
 }
 
 
-
+/**
+ * Toggles an element's class.
+ * @param {string} id - Id of the element whose class is to be toggled
+ * @param {*} className - Name of the class to be toggled.
+ */
 function toggleClass(id, className) {
     let element = document.getElementById(id);
     element.classList.toggle(className);
 }
 
 
-
+/**
+ * Toggles sound volume (Either on or off).
+ */
 function toggleSound() {
     if (sound === true) {
         muteSound();
@@ -152,7 +180,9 @@ function toggleSound() {
 }
 
 
-
+/**
+ * Mutes and pauses all sounds.
+ */
 function muteSound() {
     allSounds.forEach((sound) => {
         sound.muted = true;
@@ -164,7 +194,9 @@ function muteSound() {
 }
 
 
-
+/**
+ * Unmutes and resumes all sounds.
+ */
 function unmuteSound() {
     allSounds.forEach((sound) => {
         sound.muted = false;
@@ -176,7 +208,9 @@ function unmuteSound() {
 }
 
 
-
+/**
+ * Toggles fullscreen mode.
+ */
 function toggleFullscreen() {
     if (fullscreen === false) {
         openFullscreen();
@@ -190,7 +224,9 @@ function toggleFullscreen() {
 }
 
 
-
+/**
+ * Enters fullscreen mode.
+ */
 function openFullscreen() {
     let gameBox = document.getElementById('game-box');
     if (gameBox.requestFullscreen) {
@@ -204,7 +240,9 @@ function openFullscreen() {
 }
 
 
-
+/**
+ * Exits fullscreen mode.
+ */
 function closeFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -217,20 +255,61 @@ function closeFullscreen() {
 }
 
 
-
+/**
+ * Toggles control instructions.
+ */
 function toggleControls() {
+    renderControls();
     toggleClass('controls-pop-up', 'hide');
 }
 
 
+/**
+ * Renders control instructions depending on type of device.
+ */
+function renderControls() {
+    if (window.innerWidth <= 720) {
+        renderControlsMobile();
+    } else {
+        renderControlsDesktop();
+    }
+}
 
+
+/**
+ * Renders control instructions when playing on PC.
+ */
+function renderControlsDesktop() {
+    let controlsPopUp = document.getElementById('controls-pop-up');
+    controlsPopUp.innerHTML = desktopControlsTemplate();
+}
+
+
+/**
+ * Renders control instructions when playing on mobile device.
+ */
+function renderControlsMobile() {
+    let controlsPopUp = document.getElementById('controls-pop-up');
+    controlsPopUp.innerHTML = mobileControlsTemplate();
+}
+
+
+/**
+ * Changes source of an HTML image element.
+ * @param {string} id - Images id whose source to be changed.
+ * @param {*} path - New image path is to be used. 
+ */
 function changeSrc(id, path) {
     let img = document.getElementById(id);
     img.src = path;
 }
 
 
-
+/**
+ * Changes an HTML element's title.
+ * @param {string} id - Element's id whose title to be changed.
+ * @param {*} name - Element's new title.
+ */
 function changeTitle(id, name) {
     let element = document.getElementById(id);
     element.title = name;
@@ -257,7 +336,9 @@ function getHost() {
 }
 
 
-
+/**
+ * 
+ */
 screen.orientation.addEventListener('change', () => {
     if (screen.orientation.type === 'landscape-primary') {
         toggleClass('rotate-smartphone', 'hide');

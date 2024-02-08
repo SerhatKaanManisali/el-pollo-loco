@@ -76,76 +76,201 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
-        this.move();
         this.animate();
         allSounds[2].volume = 0.35;
         allSounds[3].volume = 0.15;
     }
 
 
-    move() {
-        setStoppableInterval(() => {
-            if (gameRunning) {
-                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                    this.moveRight();
-                    this.otherDirection = false;
-                    if (!this.isAboveGround()) {
-                        allSounds[0].play();
-                    }
-                }
-        
-                if (this.world.keyboard.LEFT && this.x > 0) {
-                    this.moveLeft();
-                    this.otherDirection = true
-                    if (!this.isAboveGround()) {
-                        allSounds[0].play();
-                    }
-                }
-        
-                if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                    this.jump();
-                    allSounds[1].volume = 0.5;
-                    allSounds[1].play();
-                }
-        
-                this.world.camera_x = -this.x + 100;
-            }
-        }, 1000 / 60);
+    /**
+     * Starts character's animations.
+     */
+    animate() {
+        setStoppableInterval(() => this.moveCharacter(), 1000 / 60);
+        setStoppableInterval(() => this.playCharacter(), 100);
     }
 
 
-    animate() {
-        setStoppableInterval(() => {
-            if (gameRunning) {
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    allSounds[3].pause();
-                    setTimeout(stopGame(), 100);
-                } else if (this.isHurt()) {
-                    this.playAnimation(this.IMAGES_HURT);
-                    this.idleStart = 0;
-                    allSounds[3].pause();
-                } else if (this.isAboveGround() && this.speed_y > 0) {
-                    this.playAnimation(this.IMAGES_JUMPING);
-                    this.idleStart = 0;
-                    allSounds[3].pause();
-                } else if (this.isAboveGround() && this.speed_y < 0) {
-                    this.playAnimation(this.IMAGES_FALLING);
-                    this.idleStart = 0;
-                    allSounds[3].pause();
-                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.idleStart = 0;
-                    allSounds[3].pause();
-                } else if (this.idleStart >= 5000) {
-                    this.playAnimation(this.IMAGES_IDLE_LONG);
-                    allSounds[3].play();
-                } else {
-                    this.playAnimation(this.IMAGES_IDLE);
-                    this.idleStart += 100;
-                    allSounds[3].pause();
-                }
+    /**
+     * Moves character on the map.
+     */
+    moveCharacter() {
+        if (gameRunning) {
+            if (this.canMoveRight())
+                this.moveRight();
+            if (this.canMoveLeft())
+                this.moveLeft();
+            if (this.canJump())
+                this.jump();
+        }
+        this.world.camera_x = -this.x + 100;
+    }
+
+
+
+    /**
+     * Moves character to the right.
+     */
+    moveRight() {
+        super.moveRight();
+        this.otherDirection = false;
+        if (!this.isAboveGround()) {
+            allSounds[0].play();
+        }
+    }
+
+
+    /**
+     * Moves character to the left.
+     */
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = true
+        if (!this.isAboveGround()) {
+            allSounds[0].play();
+        }
+    }
+
+
+    /**
+     * Makes character jump.
+     */
+    jump() {
+        super.jump();
+        allSounds[1].volume = 0.5;
+        allSounds[1].play();
+    }
+
+
+    /**
+     * @returns - Condition when checking if character wants to move to the right.
+     */
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+    }
+
+
+    /**
+     * @returns - Condition when checking if character wants to move to the left.
+     */
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > 0;
+    }
+
+
+    /**
+     * @returns - Condition when checking if character wants to jump.
+     */
+    canJump() {
+        return this.world.keyboard.SPACE && !this.isAboveGround();
+    }
+
+
+    /**
+     * Animates character depending on it's actions.
+     */
+    playCharacter() {
+        if (gameRunning) {
+            if (this.isDead()) {
+                this.playDead();
+            } else if (this.isHurt()) {
+                this.playHurt();
+            } else if (this.isAboveGround() && this.speed_y > 0) {
+                this.playJump();
+            } else if (this.isAboveGround() && this.speed_y < 0) {
+                this.playFall();
+            } else if (this.isMoving()) {
+                this.playWalk();
+            } else if (this.isIdle()) {
+                this.playIdleLong();
+            } else {
+                this.playIdle();
             }
-        }, 100);
+        }
+    }
+
+
+    /**
+     * @returns - Condition when checking if character is moving to the left or to the right.
+     */
+    isMoving() {
+        return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+    }
+
+
+    /**
+     * @returns - Condition when checking if character isn't moving.
+     */
+    isIdle() {
+        return this.idleStart >= 5000
+    }
+
+
+    /**
+     * Plays death animation.
+     */
+    playDead() {
+        this.playAnimation(this.IMAGES_DEAD);
+        allSounds[3].pause();
+        setTimeout(stopGame(), 100);
+    }
+
+
+    /**
+     * Plays animation when character is hurt.
+     */
+    playHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.idleStart = 0;
+        allSounds[3].pause();
+    }
+
+
+    /**
+     * Plays animation when character is jumping.
+     */
+    playJump() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        this.idleStart = 0;
+        allSounds[3].pause();
+    }
+
+
+    /**
+     * Plays animation when character is falling.
+     */
+    playFall() {
+        this.playAnimation(this.IMAGES_FALLING);
+        this.idleStart = 0;
+        allSounds[3].pause();
+    }
+
+
+    /**
+     * Plays animation when character is walking.
+     */
+    playWalk() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.idleStart = 0;
+        allSounds[3].pause();
+    }
+
+
+    /**
+     * Plays animation when character hasn't been moving for too long.
+     */
+    playIdleLong() {
+        this.playAnimation(this.IMAGES_IDLE_LONG);
+        allSounds[3].play();
+    }
+
+
+    /**
+     * Plays standard animation when standing still for a few seconds.
+     */
+    playIdle() {
+        this.playAnimation(this.IMAGES_IDLE);
+        this.idleStart += 100;
+        allSounds[3].pause();
     }
 }

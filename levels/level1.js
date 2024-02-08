@@ -1,12 +1,13 @@
 let level1;
 
 
+
 function initLevel() {
     level1 = new Level(
         [
             new Chicken('normal'),
             new Chicken('normal'),
-            new Chicken('small'),
+            new Chicken('small')
         ],
         [
             new Cloud(),
@@ -49,6 +50,7 @@ function initLevel() {
         [
         ],
         [
-        ]
+            new CollectableObject('left', 'bottle')
+        ],
     );
 }

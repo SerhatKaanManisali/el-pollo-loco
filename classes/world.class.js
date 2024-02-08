@@ -14,6 +14,8 @@ class World {
     endbossBar = new StatusBar('ENDBOSS', 100, 150);
     throwDelay = false;
     collisionStatus = false;
+    endbossActive;
+    movableObject = new MovableObject();
 
 
     constructor(canvas, keyboard) {
@@ -135,7 +137,7 @@ class World {
      */
     checkIfBottleHit(bottle) {
         this.level.enemies.forEach((enemy) => {
-            if (this.bottleHit()) {
+            if (bottle.isColliding(enemy) && !this.collisionStatus) {
                 if (enemy.type) {
                     allSounds[4].play();
                     enemy.hit(100);
@@ -145,14 +147,6 @@ class World {
             }
         });
         requestAnimationFrame(() => this.checkIfBottleHit(bottle));
-    }
-
-
-    /**
-     * @returns - Condition when checking if bottle hit an enemy.
-     */
-    bottleHit() {
-        return bottle.isColliding(enemy) && !this.collisionStatus;
     }
 
 
@@ -171,6 +165,7 @@ class World {
      * Draw any object on canvas multiple times a second to create a fluid motion.
      */
     draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -181,8 +176,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.drawHud();
         this.ctx.translate(-this.camera_x, 0);
-        let self = this;
-        requestAnimationFrame(() => self.draw());
+        requestAnimationFrame(() => this.draw());
     }
 
 
@@ -252,8 +246,11 @@ class World {
      * Activates endboss when character reaches a certain place on the map.
      */
     activateEndboss() {
-        if (gameRunning && this.character.x >= 3000) {
+        if (gameRunning && this.character.x >= 3000 && !this.endbossActive) {
             this.level.enemies.push(this.endboss);
+            let index = this.level.enemies.indexOf(this.endboss);
+            this.level.enemies[index].animate();
+            this.endbossActive = true;
         }
     }
 }

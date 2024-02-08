@@ -8,7 +8,7 @@
     <title>El Pollo Loco</title>
     <link rel="shortcut icon" href="img/6_salsa_bottle/salsa_bottle.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/movable-object.class.js"></script>
     <script src="classes/status-bar.class.js"></script>
@@ -23,6 +23,7 @@
     <script src="classes/collectable-object.class.js"></script>
     <script src="classes/level.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="assets.js"></script>
     <script src="game.js"></script>
 </head>
 
@@ -36,69 +37,16 @@
         </div>
         <div id="start-screen"></div>
         <canvas id="canvas" width="720" height="480"></canvas>
-        <div class="hide" id="controls-pop-up">
-            <div class="controls-content">
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <div>
-                            <img src="img/ui/a.png">
-                            <img src="img/ui/d.png">
-                        </div>
-                        <p>or</p>
-                        <div>
-                            <img src="img/ui/arrow-left.png" alt="">
-                            <img src="img/ui/arrow-right.png" alt="">
-                        </div>
-                    </div>
-                    <p>Left/Right</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img class="big-key" src="img/ui/space.png">
-                    </div>
-                    <p>Jump</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img class="big-key" src="img/ui/shift.png">
-                    </div>
-                    <p>Throw</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img src="img/ui/p.png">
-                    </div>
-                    <p>Play/Pause</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img src="img/ui/c.png">
-                    </div>
-                    <p>Controls</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img src="img/ui/m.png">
-                    </div>
-                    <p>Mute/Unmute</p>
-                </div>
-                <div class="controls-row">
-                    <div class="controls-keys">
-                        <img src="img/ui/f.png">
-                    </div>
-                    <p>Fullscreen</p>
-                </div>
-            </div>
-        </div>
+        <div class="hide" id="controls-pop-up"></div>
         <div class="ui-box">
-            <a class="scale-on-hover" href="legal_notice.html" target="_blank" title="Legal notice"><img src="img/ui/legal-notice-icon.png"></a>
-            <a class="scale-on-hover" href="privacy_policy.html" target="_blank" title="Privacy policy"><img src="img/ui/privacy-policy-icon.png"></a>
+            <a class="scale-on-hover" href="/html/legal_notice.html" target="_blank" title="Legal notice"><img src="img/ui/legal-notice-icon.png"></a>
+            <a class="scale-on-hover" href="/html/privacy_policy.html" target="_blank" title="Privacy policy"><img src="img/ui/privacy-policy-icon.png"></a>
             <img class="scale-on-hover" id="play-icon" src="img/ui/play-icon.png" onclick="toggleGame()" title="P = Play">
             <img class="scale-on-hover" id="controls-icon" src="img/ui/controls.png" onclick="toggleControls()" title="C = Controls">
             <img class="scale-on-hover" id="sound-icon" src="img/ui/sound-on.png" onclick="toggleSound()" title="M = Mute">
             <img class="scale-on-hover" id="fullscreen-icon" src="img/ui/fullscreen-enter.png" onclick="toggleFullscreen()" title="F = Fullscreen">
         </div>
-        <div class="mobile-buttons">
+        <div id="mobile-buttons" class="hide">
             <div class="button-box">
                 <button id="move-left-button" type="button"><img src="img/ui/mobile-left.png"></button>
                 <button id="move-right-button" type="button"><img src="img/ui/mobile-right.png"></button>

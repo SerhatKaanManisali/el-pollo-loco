@@ -78,7 +78,7 @@ class CollectableObject extends DrawableObject {
      * @returns - Condition when checking if coin is small.
      */
     isSmall() {
-        return this.image === 'small'
+        return this.image === 'small';
     }
 
 
@@ -144,6 +144,7 @@ class CollectableObject extends DrawableObject {
      * @returns - Condition when checking if character is collecting bottle.
      */
     isCollectingBottle(co) {
+        co.y
         return this.world.character.isColliding(co) && co.isBottle() && this.bottleAmount < 100;
     }
 
@@ -152,7 +153,7 @@ class CollectableObject extends DrawableObject {
      * @returns - Condition when checking if character is collecting coin.
      */
     isCollectingCoin(co) {
-        return this.world.character.isColliding(co) && co.type === 'coin' && this.coinAmount < 100;
+        return this.world.character.isColliding(co) && co.isCoin() && this.coinAmount < 100;
     }
 
 
