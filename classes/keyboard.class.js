@@ -12,6 +12,9 @@ class Keyboard {
     }
 
 
+    /**
+     * Detects which key has been pressed on the keyboard.
+     */
     bindKeyPressEvents() {
         window.addEventListener('keydown', (event) => {
             if (event.keyCode == 37 || event.keyCode == 65) {
@@ -80,6 +83,9 @@ class Keyboard {
     }
 
 
+    /**
+     * Detects which button has been pressed on the mobile device.
+     */
     bindButtonPressEvents() {
         document.getElementById('move-left-button').addEventListener('touchstart', (event) => {
             event.preventDefault();

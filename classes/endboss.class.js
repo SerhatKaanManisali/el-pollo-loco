@@ -41,43 +41,83 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 4000;
-        this.speed = 0.5;
-        allSounds[8].volume = 0.15;
-        allSounds[9].volume = 0.15;
+        this.setUpEndboss();
         this.animate();
     }
 
 
-    animate() {
-        setStoppableInterval(() => {
-            if (gameRunning) {
-                this.moveLeft();
-            }
-        }, 1000 / 60);
-
-        setStoppableInterval(() => {
-            if (gameRunning) {
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    allSounds[9].play();
-                    setTimeout(stopGame(), 100);
-                } else if (this.isHurt()) {
-                    this.playAnimation(this.IMAGES_HURT);
-                    allSounds[7].play();
-                } else if (this.x - (this.world.character.x + this.world.character.width) <= this.attackRange) {
-                    this.attack();
-                } else if (this.x - (this.world.character.x + this.world.character.width) <= this.chaseRange) {
-                    this.chase();
-                } else {
-                    this.speed = 0.5;
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-            }
-        }, 200);
+    /**
+     * Sets up endboss's properties.
+     */
+    setUpEndboss() {
+        this.x = 4000;
+        this.speed = 0.5;
+        allSounds[8].volume = 0.15;
+        allSounds[9].volume = 0.15;
     }
 
 
+    /**
+     * Starts animating endboss.
+     */
+    animate() {
+        setStoppableInterval(() => this.moveEndboss(), 1000 / 60);
+        setStoppableInterval(() => this.playEndboss(), 200);
+    }
+
+
+    /**
+     * Moves endboss to left.
+     */
+    moveEndboss() {
+        if (gameRunning)
+            this.moveLeft();
+    }
+
+
+    /**
+     * Plays endbosses animations depending on it's actions.
+     */
+    playEndboss() {
+        if (gameRunning) {
+            if (this.isDead()) {
+                this.playDead();
+            } else if (this.isHurt()) {
+                this.playHurt();
+            } else if (this.isInAttackRange()) {
+                this.attack();
+            } else if (this.isInChaseRange()) {
+                this.chase();
+            } else {
+                this.speed = 0.5;
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }
+    }
+
+
+    /**
+     * Plays death animation.
+     */
+    playDead() {
+        this.playAnimation(this.IMAGES_DEAD);
+        allSounds[9].play();
+        setTimeout(stopGame(), 100);
+    }
+
+
+    /**
+     * Plays hurt animation.
+     */
+    playHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        allSounds[7].play();
+    }
+
+
+    /**
+     * Plays attack animation.
+     */
     attack() {
         this.speed = 0;
         this.playAnimation(this.IMAGES_ATTACK);
@@ -89,8 +129,27 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * Plays chase animation.
+     */
     chase() {
         this.speed = 3;
         this.playAnimation(this.IMAGES_WALKING);
+    }
+
+
+    /**
+     * @returns - Condition when checking if character is in endboss's attack range.
+     */
+    isInAttackRange() {
+        return this.x - (this.world.character.x + this.world.character.width) <= this.attackRange;
+    }
+
+
+    /**
+     * @returns - Condition when checking if character is in endboss's chase range.
+     */
+    isInChaseRange() {
+        return this.x - (this.world.character.x + this.world.character.width) <= this.chaseRange;
     }
 }

@@ -11,11 +11,20 @@ class Cloud extends MovableObject {
     }
     
 
+    /**
+     * Starts animating clouds.
+     */
     animate() {
-        setStoppableInterval(() => {
-            if (gameRunning) {
-                this.moveLeft();
-            }
-        }, 1000 / 60);
+        setStoppableInterval(() => this.moveClouds(), 1000 / 60);
+    }
+
+
+    /**
+     * Moves clounds to left.
+     */
+    moveClouds() {
+        if (gameRunning) {
+            this.moveLeft();
+        }
     }
 }
